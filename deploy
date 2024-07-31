@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# Enable dotglob to include hidden files in globbing patterns
+shopt -s dotglob
+
+# Function to create symlinks
+create_symlink() {
+    local source_file="$1"
+    local target_file="$2"
+    local target_dir=$(dirname "$target_file")
+
+    echo "Attempting to create symlink:"
+    echo "  Source: $source_file"
+    echo "  Target: $target_file"
+
+    # Create target directory if it doesn't exist
+    if [ ! -d "$target_dir" ]; then
+        mkdir -p "$target_dir"
+        echo "Created directory: $target_dir"
+    fi
+
+    # Check if the file already exists in the home directory
+    if [ -e "$target_file" ]; then
+        echo "Local dotfile $target_file would be overwritten with a symlink, skipping."
+    else
+        ln -s "$source_file" "$target_file"
+        echo "Created symlink: $target_file -> $source_file"
+    fi
+    echo ""
+}
+
+# Main function to traverse directories and create symlinks
+traverse_and_link() {
+    local base_dir="$1"
+    local current_dir="$2"
+    local relative_path="${current_dir#$base_dir}"
+    relative_path="${relative_path#/}"  # Remove leading slash if present
+
+    echo "Traversing directory: $current_dir"
+
+    # Handle files in the current directory
+    for item in "$current_dir"/*; do
+        echo "Examining item: $item"
+        if [ -f "$item" ]; then
+            filename=$(basename "$item")
+            echo "  Found file: $filename"
+            if [[ "$filename" == .* && "$filename" != ".git" ]]; then
+                echo "  File is a dotfile, processing..."
+                if [ -z "$relative_path" ]; then
+                    target_file="$HOME/$filename"
+                else
+                    target_file="$HOME/$relative_path/$filename"
+                fi
+                create_symlink "$item" "$target_file"
+            else
+                echo "  Not a dotfile or is .git, skipping"
+            fi
+        elif [ -d "$item" ]; then
+            dirname=$(basename "$item")
+            echo "Found directory: $dirname"
+            # If it's a directory (and not .git, . or ..), recurse into it
+            if [[ "$dirname" != ".git" && "$dirname" != "." && "$dirname" != ".." ]]; then
+                echo "Recursing into $dirname"
+                traverse_and_link "$base_dir" "$item"
+            else
+                echo "Skipping $dirname"
+            fi
+        else
+            echo "  Not a file or directory, skipping"
+        fi
+    done
+}
+
+# Start the process from the current directory
+echo "Starting symlink creation process"
+echo "Current working directory: $(pwd)"
+base_dir="$(pwd)"
+traverse_and_link "$base_dir" "$base_dir"
+
+# Disable dotglob
+shopt -u dotglob
+
+echo "Symlink creation process completed."
