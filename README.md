@@ -1,3 +1,7 @@
+This repo allows easy deploy of all custom dotfiles to any *nix system.
+A quick way to get all your configs on a new system.
+
+
 To deploy and use this repo, run the following commands on any *nix system:
 
 mkdir ~/dotfiles_repo
