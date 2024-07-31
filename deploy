@@ -81,3 +81,16 @@ traverse_and_link "$base_dir" "$base_dir"
 shopt -u dotglob
 
 echo "Symlink creation process completed."
+
+# Reload dotfiles
+if [ -n "$ZSH_VERSION" ]; then
+    echo "Reloading Zsh configuration..."
+    source ~/.zshrc
+elif [ -n "$BASH_VERSION" ]; then
+    echo "Reloading Bash configuration..."
+    source ~/.bashrc
+else
+    echo "Unknown shell. Please reload your shell configuration manually."
+fi
+
+echo "Dotfiles have been reloaded. You may need to restart your terminal for all changes to take effect."
