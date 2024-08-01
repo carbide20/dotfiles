@@ -4,8 +4,8 @@ A quick way to get all your configs on a new system.
 
 To deploy and use this repo, run the following commands on any *nix system:
 
-mkdir ~/dotfiles_repo
-cd ~/dotfiles_repo
+mkdir ~/.dotfiles_repo
+cd ~/.dotfiles_repo
 git clone git@github.com:carbide20/dotfiles.git .
 chmod +x deploy
 ./deploy
