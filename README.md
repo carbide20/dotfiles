@@ -6,7 +6,7 @@ To deploy and use this repo, run the following commands on any *nix system:
 
 mkdir ~/.dotfiles_repo
 cd ~/.dotfiles_repo
-git clone git@github.com:carbide20/dotfiles.git .
+git clone https://github.com/carbide20/dotfiles.git .
 chmod +x deploy
 ./deploy
 
