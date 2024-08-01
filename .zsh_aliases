@@ -1,0 +1,2 @@
+alias shebang='echo "#!/usr/bin/env bash"'
+alias weather='curl wttr.in'
