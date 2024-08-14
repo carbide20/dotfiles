@@ -5,5 +5,5 @@ alias weather='curl wttr.in'
 alias bonsai='cbonsai -lit1'
 
 # Server Jails
-alias banned-ip-count='sudo iptables -L -n | awk '$1=="REJECT" && $4!="0.0.0.0/0" {print $4}' | wc -l'
-alias banned-ip-list='sudo iptables -L -n | awk '$1=="REJECT" && $4!="0.0.0.0/0" {print $4}' | less'
+alias banned-ip-count='sudo iptables -L -n | awk '\''$1=="REJECT" && $4!="0.0.0.0/0" {print $4}'\'' | wc -l'
+alias banned-ip-list='sudo iptables -L -n | awk '\''$1=="REJECT" && $4!="0.0.0.0/0" {print $4}'\'' | less'
