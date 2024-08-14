@@ -1,3 +1,5 @@
+# Universal Commands
+alias checkshell='(ps -p$$ -ocmd= 2>/dev/null || ps -p$$ -ocommand= 2>/dev/null)'
 alias shebang='echo "#!/usr/bin/env bash"'
 
 # Fun nonsense
