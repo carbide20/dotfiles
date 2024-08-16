@@ -9,3 +9,9 @@ alias bonsai='cbonsai -lit1'
 # Server Jails
 alias banned-ip-count='sudo iptables -L -n | awk '\''$1=="REJECT" && $4!="0.0.0.0/0" {print $4}'\'' | wc -l'
 alias banned-ip-list='sudo iptables -L -n | awk '\''$1=="REJECT" && $4!="0.0.0.0/0" {print $4}'\'' | less'
+
+# Mopidy (MPD Music Player Daemon)
+alias mpd-reload-db='sudo rm -rf /var/lib/mopidy/local/library.db && sudo mopidyctl local scan'
+
+# NCMPCPP (MPD Client)
+alias music='ncmpcpp'
